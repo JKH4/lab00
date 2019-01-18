@@ -77,3 +77,19 @@ resource "aws_instance" "web" {
     ENV  = "training-tf"
   }
 }
+
+resource "aws_elb" "myELB" {
+  subnets = ["${data.aws_subnet_ids.targetSubnetIds.ids}"]
+
+  listener {
+    instance_port     = 80
+    instance_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
+  }
+
+  tags = {
+    Name = "myVM"
+    ENV  = "training-tf"
+  }
+}
